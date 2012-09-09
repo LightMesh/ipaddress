@@ -648,7 +648,11 @@ module IPAddress;
     def self.parse_hex(hex, prefix=128)
       self.parse_u128(hex.hex, prefix)
     end
-    
+
+    def first
+      self.class.parse_u128 self.to_i+1, prefix
+    end
+
     private
 
     def compress_address
