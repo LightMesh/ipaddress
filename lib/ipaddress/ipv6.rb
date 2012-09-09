@@ -327,6 +327,16 @@ module IPAddress;
     def network_u128
       to_u128 & @prefix.to_u128
     end
+    
+    #
+    # Returns the broadcast address for the given IP.
+    # 
+    #   ip6 = IPAddress "2001:db8::8:800:200c:417a/96"
+    #      #=> "2001:db8::8:800:0:0"
+    #
+    def network
+      self.class.parse_u128(network_u128)
+    end
 
     #
     # Returns the broadcast address in Unsigned 128bits format
@@ -345,11 +355,23 @@ module IPAddress;
     end
 
     #
+    # Returns the broadcast address for the given IP.
+    #
+    #   ip6 = IPAddress "2001:db8::8:800:200c:417a/96"
+    #
+    #   ip6.broadcast.to_s
+    #     #=> "2001:db8::8:800:ffff:ffff"
+    #
+    def broadcast
+      self.class.parse_u128(broadcast_u128)
+    end
+
+    #
     # Returns the number of IP addresses included
     # in the network. It also counts the network
     # address and the broadcast address.
     #
-    #   ip6 = IPAddress("2001:db8::8:800:200c:417a/64")
+    #   ip6 = IPAddress("2001:db8::8:800:200c:417a/122")
     #
     #   ip6.size
     #     #=> 18446744073709551616
